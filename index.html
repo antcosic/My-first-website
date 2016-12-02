@@ -1,0 +1,736 @@
+<?php
+	if (isset($_POST["submit"])) {
+		$name = $_POST['name'];
+		$email = $_POST['email'];
+		$message = $_POST['message'];
+
+		$from = 'Kontakt za posao'; 
+		$to = 'antoniosecond@msn.com'; 
+		$subject = 'Message from Contact Demo ';
+		
+		$body ="From: $name\n E-Mail: $email\n Message:\n $message";
+		// Check if name has been entered
+		if (!$_POST['name']) {
+			$errName = 'Please enter your name';
+		}
+		
+		// Check if email has been entered and is valid
+		if (!$_POST['email'] || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+			$errEmail = 'Please enter a valid email address';
+		}
+		
+		//Check if message has been entered
+		if (!$_POST['message']) {
+			$errMessage = 'Please enter your message';
+		}
+		
+// If there are no errors, send the email
+if (!$errName && !$errEmail && !$errMessage) {
+	if (mail ($to, $subject, $body, $from)) {
+		$result='<div class="alert alert-success">Thank You! I will be in touch</div>';
+	} else {
+		$result='<div class="alert alert-danger">Sorry there was an error sending your message. Please try again later.</div>';
+	}
+}
+	}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Theme Made By www.w3schools.com - No Copyright -->
+  <link rel="icon" type="image/x-icon" href="logo1.png">
+  <title>Unisons</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+  body {
+      font: 400 15px Lato, sans-serif;
+      line-height: 1.8;
+      color: #818181;
+  }
+  h2 {
+      font-size: 24px;
+      text-transform: uppercase;
+      color: #303030;
+      font-weight: 600;
+      margin-bottom: 30px;
+  }
+  h4 {
+      font-size: 19px;
+      line-height: 1.375em;
+      color: #303030;
+      font-weight: 400;
+      margin-bottom: 30px;
+  }
+  .jumbotron {
+      background-color: #0b9444;
+      color: #fff;
+      padding: 100px 25px;
+      font-family: Montserrat, sans-serif;
+  }
+  .lijeva-slika{
+	  text-align:left;
+	  padding-left: 10px;
+  }
+  .desna-slika{
+	  text-align:right;
+	  padding-right: 10px;
+  }
+  .linija{
+	  border-bottom-style: solid;
+	  border-bottom-color: #0b9444;
+	  padding: 10px;
+  }
+  .container-fluid {
+      padding: 60px 50px;
+  }
+  .bg-grey {
+      background-color: #f6f6f6;
+  }
+  .logo-small {
+      color: #00bdbd;
+      font-size: 50px;
+  }
+  .logo {
+      color: #0b9444;
+      font-size: 200px;
+  }
+  .thumbnail {
+      padding: 0 0 15px 0;
+      border: none;
+      border-radius: 0;
+  }
+  .thumbnail img {
+      width: 100%;
+      height: 100%;
+      margin-bottom: 10px;
+  }
+  .carousel-control.right, .carousel-control.left {
+      background-image: none;
+      color: #0b9444;
+  }
+  .carousel-indicators li {
+      border-color: #0b9444;
+  }
+  .carousel-indicators li.active {
+      background-color: #0b9444;
+  }
+  .item h4 {
+      font-size: 19px;
+      line-height: 1.375em;
+      font-weight: 400;
+      font-style: italic;
+      margin: 70px 0;
+  }
+  .item span {
+      font-style: normal;
+  }
+  .panel {
+      border: 1px solid #0b9444;
+      border-radius:0 !important;
+      transition: box-shadow 0.5s;
+  }
+  .panel:hover {
+      box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+  }
+  .panel-footer .btn:hover {
+      border: 1px solid #0b9444;
+      background-color: #0b9444 !important;
+      color: #f4511e;
+  }
+  .panel-heading {
+      color: #fff !important;
+      background-color: #0b9444 !important;
+      padding: 25px;
+      border-bottom: 1px solid transparent;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+  }
+  .panel-footer {
+      background-color: white !important;
+  }
+  .panel-footer h3 {
+      font-size: 32px;
+  }
+  .panel-footer h4 {
+      color: #aaa;
+      font-size: 14px;
+  }
+  .panel-footer .btn {
+      margin: 15px 0;
+      background-color: #0b9444;
+      color: #fff;
+  }
+  .navbar {
+      margin-bottom: 0;
+      background-color: #0b9444;
+      z-index: 9999;
+      border: 0;
+      font-size: 12px !important;
+      line-height: 1.42857143 !important;
+      letter-spacing: 4px;
+      border-radius: 0;
+      font-family: Montserrat, sans-serif;
+  }
+  .navbar li a, .navbar .navbar-brand {
+	  padding: 10px;
+      color: #fff !important;
+  }
+  .navbar-nav li a:hover, .navbar-nav li.active a {
+      color: #0b9444 !important;
+      background-color: #fff !important;
+  }
+  .navbar-default .navbar-toggle {
+      border-color: transparent;
+      color: #fff !important;
+  }
+  footer .glyphicon {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #0b9444;
+  }
+  .slideanim {visibility:hidden;}
+  .slide {
+      animation-name: slide;
+      -webkit-animation-name: slide;
+      animation-duration: 1s;
+      -webkit-animation-duration: 1s;
+      visibility: visible;
+  }
+  @keyframes slide {
+    0% {
+      opacity: 0;
+      transform: translateY(70%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+  @-webkit-keyframes slide {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(70%);
+    }
+    100% {
+      opacity: 1;
+      -webkit-transform: translateY(0%);
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .col-sm-4 {
+      text-align: center;
+      margin: 25px 0;
+    }
+    .btn-lg {
+        width: 100%;
+        margin-bottom: 35px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .logo {
+        font-size: 150px;
+    }
+  }
+  </style>
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="#myPage"><img class="img-responsive" src="logo1.png" width="35" height="35"></a>
+		  <a class="navbar-brand" href="#myPage">Unisons</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#about">O NAMA</a></li>
+		<li><a href="#zaposlenici">ZAPOSLENICI</a></li>
+        <li><a href="#services">USLUGE</a></li>
+        <li><a href="#portfolio">PORTFOLIO</a></li>
+        <li><a href="#pricing">CIJENIK</a></li>
+        <li><a href="#contact">KONTAKT</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron text-center" style="background-image:url('slika.jpg');" max-width:100%; max-height:100%;>
+  <h1><strong>Unisons</strong></h1>
+  <p>Specijalizirani smo za izgradnju i poboljšanje informacijskog sustava unutar svih vrsta organizacija</p>
+  <form class="form-inline">
+    <input id="email" type="email" class="form-control" size="50" placeholder="Email adresa" required>
+    <button id="subscribe" type="button" class="btn btn-danger">Subscribe</button>
+  </form>
+</div>
+
+<!-- Container (About Section) -->
+<div id="about" class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>O nama</h2><br>
+      <h4>Malo poduzeće osnovano 2016.g. usmjereno prema budućnosti i ostvarivanju željenih ciljeva. Iako tek osnovano, poduzeće The Unisons smatra kako može uspjeti na tržištu i prikazati sva svoja znanja i razmišljanja.
+		Informacijsku tehnologiju koristimo kao sredstvo našeg poslovanja te istu nastojimo modernizirati i poboljšati u svakom segmentu.
+		U našem kadru imamo mlade stručne ljude koji su spremni na stalno učenje i konstantno usavršavanje. Smatramo da su ljudi i znanje ključan resurs i čimbenik za uspjeh te smo na osnovu toga usmjerili svoj rad i djelovanje.
+		</h4><br>
+      <br><button class="btn btn-default btn-lg"><a href="kontakt.php">Kontaktirajte nas</a></button>
+    </div>
+    <div class="col-sm-4">
+	  <img class="img-responsive" src="logo1.png" width="250" height="250">
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid bg-grey">
+  <div class="row">
+    <div class="col-sm-4">
+		<img class="img-responsive" src="smart.jpg" width="350" height="700">
+    </div>
+    <div class="col-sm-8">
+      <h2>Naše vrijednosti</h2><br>
+      <h4><strong>Misija</strong><br> Konstantno usavršavanje, praćenje razvoja tehnologije i stvaranje novih ICT rješenja kako bi se poboljšalo poslovanje i životni standard te kako bi stvorili određenu konkurentsku prednost.</h4><br>
+      <h4><strong>Vizija</strong><br> Postati vodeće poduzecće u Hrvatskoj i u ovome dijelu Europe u razvoju aplikacija i u izgradnji informacijskih sustava. Također, naša vizija je i imati poslovni utjecaj na naše korisnike u smislu korištenja aplikacija koje će olakšati poslovanje.</h4><br>
+	  <h4><strong>Ciljevi</strong><br>  •	Svake godine ostvarivati profit 25 % veći u odnosu na prošlu poslovnu godinu<br>
+										•	Stvaranje uspješnih partnerstva i poslovnih odnosa sa drugim poduzećima u području ICT-a<br>
+										•	U idućih pet godina zaposliti 5-8 stručnih osoba kako bi se poduzeće dalje razvijalo<br>
+										•	Opstati na tržištu i postati vodeće poduzecće u Hrvatskoj u razvoju aplikacija<br>
+										•	Stvoriti brand i ime koje će biti poznato i blisko svima (korisnicima i drugim poduzećima)<br>
+										•	Zainteresirati mlade osobe za ICT putem održavanja raznih predavanja i konferencija<br>
+										•	Postići da DoggedIN bude u samom vrhu popularnih aplikacija koje su dostupne u trgovinama mobilnih aplikacija<br>
+										•	Stvaranje i održavanje povjerenja i kvalitetnih poslovnih odnosa sa svojim klijentima<br>
+										•	Svake poslovne godine imati što više stalnih klijenata<br>
+										•	U iduće tri godine plasirati još nekoliko aplikacija koje će biti prihvaćene od strane klijenata i koje će olakšati poslovanje<br>
+	  </h4><br>
+    </div>
+  </div>
+</div>
+
+<!-- Container (About Section) -->
+<div id="zaposlenici" class="container-fluid">
+  <div class="text-center">
+    <h2>Zaposlenici</h2>
+	<div class="row">
+		<div class="col-sm-4">
+		  <div class="col-sm-4">
+			<img src="filip_babic.jpg" class="img-rounded" width="150" height="150">
+		  </div>
+		  <div class="col-sm-8">
+		    <div class="lijeva-slika">
+			  <h4><strong>FILIP BABIĆ</strong><br>
+			  <h4><strong>grafički dizajner</strong><br>
+			  <h4><strong>frontend developer</strong><br>
+			</div>
+		  </div>
+		</div>
+		<div class="col-sm-8">
+		  <h4>Mladi student iz Zagreba neizostavan je član Sveučilišnih sinova uslijed svog dizajnerskog talenta, sposobnosti brzog razmišljanja 
+		      i sagledavanja činjenica sa svih aspekata.  Zaslužan je za vizualni identitet naše tvrtke (logotip, ideje za izgled stranice) 
+			  čime je dokazao koliko ima smisla za dizajn. Nadalje, njegovo konstantno propitkivanje dovodi nas do stalnog usavršavanja što je esencijalno za svaki projekt.</h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="linija">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+		</div>
+	</div>
+	<div class="row">
+      <div class="col-sm-8">
+		  <h4>Ovaj mladi Međimurec odlično koristi svoju vještinu pisanja koju je stekao kroz razne edukacije pa je stoga zadužen za vođenje stranice i 
+			  komunikacije sa zainteresiranim strankama, no to je samo djelić njegovog posla. Njegova opća informiranost i poznavanje raznih aplikacija dovodi 
+		      do toga da uvijek predloži odličan feature koji je uvidio da nedostaje nekoj konkurentskoj, 
+		      a glavni zadatak mu je programiranje i implementacija ideja.</h4>
+	  </div>
+	  <div class="col-sm-4">
+		  <div class="col-sm-7">
+		    <div class="desna-slika">
+			  <h4><strong>JURA BAKSA</strong><br>
+			  <h4><strong>backend developer</strong><br>
+			</div>
+		  </div>
+		  <div class="col-sm-5">
+			<img src="jura_baksa.jpg" class="img-rounded" width="150" height="150">
+		  </div>
+	  </div>
+    </div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="linija">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="row">
+			  <div class="col-sm-4">
+				<img src="antbrkic.jpg" class="img-rounded" width="150" height="150">
+			  </div>
+			  <div class="col-sm-8">
+				<div class="lijeva-slika">
+				  <h4><strong>ANTONIO BRKIĆ</strong><br>
+				  <h4><strong>CEO</strong><br>
+				  <h4><strong>CMO</strong><br>
+				</div>
+			  </div>
+			</div>
+		</div>
+		<div class="col-sm-8">
+		  <h4>Uslijed svog iskustva stečenog sudjelovanjem u vođenju poslovanja privatnog poduzeća i činjenicom da je jedini član tvrtke koji pohađa poslovne sustave, dečko iz Slavonije izabran je za vođu tvrtke. 
+			  Antonio je zadužen za marketinški i računovodstveni dio posla te je osoba koju trebate kontaktirati ukoliko nas želite pozvati na sastanak. 
+			  Njegova točnost i odmjerenost u izjavama garancija je da će uvijek odati dobar dojam u pregovorima.</h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="linija">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+		</div>
+	</div>
+	<div class="row">
+      <div class="col-sm-8">
+		  <h4>Postavu ove respektabilne ekipe zaključuje još jedan slavonski student koji dijeli ime sa svojim sugrađaninom. 
+			  Antoniu je u opisu posla da svojim programerski vještinama vodi i organizira ostatak ekipe kod kodiranja, ali i pomaže Filipu u dizajnerskom aspektu. 
+			  Njegova pozitivna tvrdoglavost garantira da tvrtka nikad neće odustati od neke ideje bez da uloži sav mogući trud da se ona realizira.
+		  </h4>
+	  </div>
+	  <div class="col-sm-4">
+		  <div class="col-sm-7">
+		    <div class="desna-slika">
+			  <h4><strong>ANTONIO ĆOSIĆ</strong><br>
+			  <h4><strong>backend developer</strong><br>
+			</div>
+		  </div>
+		  <div class="col-sm-5">
+			<img src="antcosic.jpg" class="img-rounded" width="150" height="150">
+		  </div>
+	  </div>
+    </div>
+  </div>
+  <div class="row slideanim">
+  </div>
+</div>
+<!-- Container (Services Section) -->
+<div id="services" class="container-fluid text-center">
+  <h2>Usluge</h2>
+  <h4>Što nudimo</h4>
+  <br>
+  <div class="row slideanim">
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-phone logo-small"></span>
+      <h4>IZRADA MOBILNIH APLIKACIJA</h4>
+      <p>Kao što je u prethodnim retcima napomenuto, mobilne aplikacije su trenutno najtraženije usluge. Živimo u dobu pametnih telefona pa je od iznimnog značaja praćenje trendova, a oni ne griješe, mobilne aplikacije su najraširenije. 
+		 Trenutno nudimo aplikacije za 3 najzastupljenija operacijska sustava: iOS, Windows Phone i za Android, no u dogovoru s klijentima, izuzetak je moguć ukoliko za to ima mogućnosti.</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-phone-alt logo-small"></span>
+      <h4>KONZULTANTSKE USLUGE</h4>
+      <p>IT tvrtke eksponencijalno rastu pa je potrebno biti drukčiji. Mi ne nudimo samo izradu naručenih aplikacija i sve što ide uz njih,
+	     mi nudimo konzultantske usluge putem kojih će zainteresirane tvrtke od nas dobiti mišljenje o tome koliko bi ih nešto koštalo, što mislimo da bi njihovom poduzeću najbolje odgovaralo i zašto bi im se baš to isplatilo.</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-eye-open logo-small"></span>
+      <h4>DIZAJN WEB STRANICA I LOGOTIPA</h4>
+      <p>Vaše poduzeće treba vizualni identitet ili web stranicu? To neće biti problem za našu ekipu. Dizajneri će biti na vezi s Vama tijekom čitavog perioda rada i uz Vaše će savjetovanje doći do idealnog rješenja. Drukčiji smo od ostalih zbog toga što nismo jedno od poduzeća koje daje na ruke konačno rješenje i pita je li to što je naručitelj tražio, 
+		 već u dosluhu s naručiteljem koji tijekom cijelog ciklusa ima mogućnost ispravljanja naših prijedloga.</p>
+    </div>
+  </div>
+  <br><br>
+  <div class="row slideanim">
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-comment logo-small"></span>
+      <h4>OGLAŠAVANJE BUDUĆNOSTI</h4>
+      <p>Davno smo zakoračili u doba kad je oglašavanje na radio prijemnicima i dnevnim novinama postalo zastarjelo. 
+	     Danas je marketing potpuno drugačiji pa je red da se i Vi prilagodite. 
+		 Mi ćemo, na osnovu prirode Vašeg poslovanja, 
+		 osmisliti najefektivniji način oglašavanja s ciljem maksimalnog učinka. </p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-user logo-small"></span>
+      <h4>POZVANA PREDAVANJA/KONFERENCIJE</h4>
+      <p>Sve zainteresirane stranke (poduzeća, fakulteti, srednje škole) su u mogućnosti za minornu cijenu zatražiti da naši zaposlenici održe predavanje o bilo kojoj od naših usluga. 
+		 Ako studente informatičkih fakulteta zanima nešto više o izradi aplikacija, vaše zaposlenike treba educirati o nekoj informatičkoj sferi ili srednjoškolce o IT smjeru, mi smo tu. </p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-hdd logo-small"></span>
+      <h4 style="color:#303030;">DESKTOP APLIKACIJE</h4>
+      <p>Iako su zastarjele desktop aplikacije još uvijek imaju važnu ulogu u većini organizacijskim sustavima.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Container (Portfolio Section) -->
+<div id="portfolio" class="container-fluid text-center bg-grey">
+  <h2>Portfolio</h2><br>
+  <h4>Što smo radili i sa kojim poslovnim partnerima</h4>
+  <div class="row text-center slideanim">
+    <div class="col-sm-4">
+      <div class="thumbnail">
+        <img src="pas.png" width="400" height="300">
+        <p><strong>DoggedIn</strong></p>
+        <p>Mobilna aplikacija za HKS.</p>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="thumbnail">
+        <img src="ibm.jpg" width="100" height="300">
+        <p><strong>IBM</strong></p>
+        <p>Europski projekt vezan uz uzgoj pasa.</p>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="thumbnail">
+        <img src="microsoft.jpg" width="400" height="300">
+        <p><strong>Microsoft</strong></p>
+        <p>Suradnja u razvoju desktop aplikacije za računovodstvo.</p>
+      </div>
+    </div>
+  </div><br>
+  
+  <h2>Što kažu naši klijenti</h2>
+  <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <h4>"Ova tvrtka je najbolja. Prezadovoljna sam sa rezultatima "<br><span style="font-style:normal;">Marta Šostarec, Direktorica IBM-a, Poslovni dnevnik</span></h4>
+      </div>
+      <div class="item">
+        <h4>"Jedna riječ... Odlično!!"<br><span style="font-style:normal;">Josip Bijelić, Vlasnik tvrtke "Hack", BUGonline</span></h4>
+      </div>
+      <div class="item">
+        <h4>"Mogu li ja biti sretniji?"<br><span style="font-style:normal;">Bogdan Erdelji, priznati IT kritičar, IT Kritike</span></h4>
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+<!-- Container (Pricing Section) -->
+<div id="pricing" class="container-fluid">
+  <div class="text-center">
+    <h2>CIJENIK</h2>
+    <h4>Pogledajte ponudu i pošaljite upit</h4>
+  </div>
+  <div class="row slideanim">
+    <div class="col-sm-4 col-xs-12">
+      <div class="panel panel-default text-center">
+        <div class="panel-heading">
+          <h1>Mobilne aplikacije</h1>
+        </div>
+        <div class="panel-body">
+          <p><strong>Dizajn aplikacije</strong></p>
+          <p><strong>Održavanje</strong></p>
+          <p><strong>Nadogradnja</strong></p>
+        </div>
+        <div class="panel-footer">
+          <h3>20000 kn</h3>
+          <h4>Uz minimalne zahtjeve</h4>
+          <button class="btn btn-lg">Pošalji upit</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 col-xs-12">
+      <div class="panel panel-default text-center">
+        <div class="panel-heading">
+          <h1>Web aplikacije</h1>
+        </div>
+        <div class="panel-body">
+          <p><strong>Izrada korisičkog sučelja i baze podataka</strong></p>
+          <p><strong>Održavanje</strong></p>
+          <p><strong>Nadogradnja i dizajn</strong></p>
+        </div>
+        <div class="panel-footer">
+		  <h3>30000 kn</h3>
+          <h4>Uz minimalne zahtjeve</h4>
+          <button class="btn btn-lg">Pošalji upit</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 col-xs-12">
+      <div class="panel panel-default text-center">
+        <div class="panel-heading">
+          <h1>Desktop aplikacije</h1>
+        </div>
+        <div class="panel-body">
+          <p><strong>Razvoj i održavanje baze podataka</strong></p>
+          <p><strong>Razvoj i implementacija desktop aplikacije</strong></p>
+          <p><strong>Dizajn korisničkog sučelja</strong></p>
+        </div>
+        <div class="panel-footer">
+		  <h3>25000 kn</h3>
+          <h4>Uz minimalne zahtjeve</h4>
+          <button class="btn btn-lg">Pošalji upit</button>
+        </div>
+      </div>
+    </div>
+	
+  </div>
+</div>
+
+<!-- Container (Contact Section) -->
+<div id="contact" class="container-fluid bg-grey">
+  <h2 class="text-center">KONTAKT</h2>
+  <div class="row">
+    <div class="col-sm-5">
+      <p>Kontaktirajte nas i mi ćemo Vam se javiti u roku od 24 sata.</p>
+      <p><span class="glyphicon glyphicon-map-marker"></span> VARAŽDIN, HR</p>
+      <p><span class="glyphicon glyphicon-phone"></span> +385 981233885</p>
+      <p><span class="glyphicon glyphicon-envelope"></span> unisons@msn.com</p>
+    </div>
+    <div class="col-sm-7 slideanim">
+      <div class="row">
+  			<div class="col-md-6 col-md-offset-3">
+  				<h1 class="page-header text-center">Contact Form Example</h1>
+				<form class="form-horizontal" role="form" method="post" action="index.php">
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="name" name="name" placeholder="First & Last Name" value="<?php echo htmlspecialchars($_POST['name']); ?>">
+							<?php echo "<p class='text-danger'>$errName</p>";?>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="email" class="col-sm-2 control-label">Email</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="<?php echo htmlspecialchars($_POST['email']); ?>">
+							<?php echo "<p class='text-danger'>$errEmail</p>";?>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="message" class="col-sm-2 control-label">Message</label>
+						<div class="col-sm-10">
+							<textarea class="form-control" rows="4" name="message"><?php echo htmlspecialchars($_POST['message']);?></textarea>
+							<?php echo "<p class='text-danger'>$errMessage</p>";?>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-10 col-sm-offset-2">
+							<input id="submit" name="submit" type="submit" value="Send" class="btn btn-primary">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-10 col-sm-offset-2">
+							<?php echo $result; ?>	
+						</div>
+					</div>
+				</form> 
+			</div>
+		</div>
+    </div>
+  </div>
+</div>
+
+<div id="googleMap" style="height:400px;width:100%;"></div>
+
+<!-- Add Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script>
+var myCenter = new google.maps.LatLng(46.305746, 16.3366066);
+
+function initialize() {
+var mapProp = {
+  center:myCenter,
+  zoom:12,
+  scrollwheel:false,
+  draggable:false,
+  mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+var marker = new google.maps.Marker({
+  position:myCenter,
+  });
+
+marker.setMap(map);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+<footer class="container-fluid text-center">
+  <a href="#myPage" title="To Top">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a>
+  <p>Theme Made By Unisons</p>
+</footer>
+
+<script>
+$(document).ready(function(){
+  // Add smooth scrolling to all links in navbar + footer link
+  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 900, function(){
+   
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+  
+  $(window).scroll(function() {
+    $(".slideanim").each(function(){
+      var pos = $(this).offset().top;
+
+      var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+    });
+  });
+})
+</script>
+
+</body>
+</html>
